@@ -1,5 +1,6 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { LayoutDashboard, List, BookOpen, BarChart3, TrendingUp } from "lucide-react";
+import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
+import { LayoutDashboard, List, BookOpen, BarChart3, TrendingUp, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -10,9 +11,10 @@ const navItems = [
 
 export default function AppSidebar() {
   const location = useLocation();
+  const { signOut, user } = useAuth();
 
   return (
-    <aside className="w-60 min-h-screen bg-sidebar border-r border-sidebar-border flex flex-col">
+    <aside className="w-60 min-h-screen bg-sidebar border-r border-sidebar-border flex flex-col shrink-0">
       <div className="p-5 flex items-center gap-2.5">
         <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
           <TrendingUp className="w-5 h-5 text-primary-foreground" />
@@ -24,7 +26,7 @@ export default function AppSidebar() {
         {navItems.map(item => {
           const isActive = location.pathname === item.to;
           return (
-            <NavLink
+            <RouterNavLink
               key={item.to}
               to={item.to}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
@@ -33,15 +35,22 @@ export default function AppSidebar() {
                   : "text-sidebar-foreground hover:text-foreground hover:bg-secondary"
               }`}
             >
-              <item.icon className="w-4.5 h-4.5" />
+              <item.icon className="w-[18px] h-[18px]" />
               {item.label}
-            </NavLink>
+            </RouterNavLink>
           );
         })}
       </nav>
 
-      <div className="p-4 border-t border-sidebar-border">
-        <p className="text-xs text-muted-foreground">XAUUSD Trader</p>
+      <div className="p-4 border-t border-sidebar-border space-y-3">
+        <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+        <button
+          onClick={signOut}
+          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors w-full"
+        >
+          <LogOut className="w-4 h-4" />
+          Sign Out
+        </button>
       </div>
     </aside>
   );
