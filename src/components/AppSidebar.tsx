@@ -19,7 +19,7 @@ export default function AppSidebar() {
         <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
           <TrendingUp className="w-5 h-5 text-primary-foreground" />
         </div>
-        <span className="text-lg font-bold text-foreground tracking-tight">GoldJournal</span>
+        <span className="text-lg font-bold text-foreground tracking-tight">DaddyFX Book</span>
       </div>
 
       <nav className="flex-1 px-3 mt-4 space-y-1">

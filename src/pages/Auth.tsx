@@ -35,7 +35,7 @@ export default function AuthPage() {
           <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center mx-auto mb-4">
             <TrendingUp className="w-7 h-7 text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground">GoldJournal</h1>
+          <h1 className="text-2xl font-bold text-foreground">DaddyFX Book</h1>
           <p className="text-sm text-muted-foreground mt-1">Professional XAUUSD Trading Journal</p>
         </div>
 
