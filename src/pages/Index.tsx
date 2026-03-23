@@ -1,6 +1,5 @@
-import { useAuth } from "@/hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
-export default function AppSidebar() {
-  // Re-export from the real file
-  return null;
-}
+const Index = () => <Navigate to="/" replace />;
+
+export default Index;
