@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useTrades, useJournal, useSaveJournal, useChecklist, useSaveChecklist, useScreenshots, useUploadScreenshot } from "@/hooks/useTrades";
-import { BookOpen, Save, Star, ImagePlus, Check } from "lucide-react";
+import { BookOpen, Save, Star, ImagePlus, Check, Activity, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Journal() {
@@ -80,45 +80,60 @@ export default function Journal() {
     }
   }
 
-  const journaledIds = new Set(trades.filter(t => existingJournal?.trade_id === t.id).map(t => t.id));
   const checkCount = Object.values(checklist).filter(Boolean).length;
 
-  if (isLoading) return <div className="flex items-center justify-center h-96 text-muted-foreground">Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="flex items-center gap-3 text-muted-foreground">
+          <Activity className="w-5 h-5 animate-pulse" />
+          <span className="text-sm font-medium">Loading journal...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Trade Journal</h1>
-        <p className="text-sm text-muted-foreground">{trades.length} trades</p>
+        <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Trade Journal</h1>
+        <p className="text-sm text-muted-foreground mt-1 font-medium">{trades.length} trades</p>
       </div>
 
       <div className="flex gap-6 min-h-[calc(100vh-12rem)]">
         {/* Trade list */}
-        <div className="w-72 shrink-0 bg-card rounded-xl border border-border overflow-auto">
-          <div className="p-4 border-b border-border">
-            <span className="text-xs font-medium bg-primary/20 text-primary px-2.5 py-1 rounded">All {trades.length}</span>
+        <div className="w-72 shrink-0 glass-card rounded-2xl overflow-hidden flex flex-col">
+          <div className="p-4 border-b border-border/60">
+            <span className="text-[11px] font-semibold bg-primary/10 text-primary px-3 py-1.5 rounded-lg border border-primary/20">All {trades.length}</span>
           </div>
-          <div className="divide-y divide-border">
+          <div className="flex-1 overflow-auto divide-y divide-border/40">
             {trades.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8 text-sm">Add trades first</p>
+              <p className="text-center text-muted-foreground py-12 text-sm font-medium">Add trades first</p>
             ) : (
               trades.map(t => (
                 <button key={t.id} onClick={() => setSelectedId(t.id)}
-                  className={`w-full text-left p-4 transition-colors ${selectedId === t.id ? 'bg-primary/10 border-l-2 border-l-primary' : 'hover:bg-secondary border-l-2 border-l-transparent'}`}>
-                  <div className="flex items-center justify-between mb-1">
+                  className={`w-full text-left p-4 transition-all duration-200 ${
+                    selectedId === t.id
+                      ? 'bg-primary/8 border-l-2 border-l-primary'
+                      : 'hover:bg-secondary/40 border-l-2 border-l-transparent'
+                  }`}>
+                  <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
-                      <span>🥇</span>
-                      <span className="font-semibold text-foreground">{t.symbol}</span>
+                      <span className="text-sm">🥇</span>
+                      <span className="font-semibold text-foreground text-sm">{t.symbol}</span>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs">
-                    <span className={t.direction === 'Long' ? 'text-primary' : 'text-loss'}>{t.direction}</span>
-                    <span className="text-muted-foreground">${Number(t.entry_price).toFixed(2)}</span>
-                    <span className={`font-medium ${Number(t.pnl) >= 0 ? 'text-profit' : 'text-loss'}`}>
+                    <span className={`text-[11px] font-bold font-mono-num ${Number(t.pnl) >= 0 ? 'text-profit' : 'text-loss'}`}>
                       {Number(t.pnl) >= 0 ? '+' : ''}${Number(t.pnl).toFixed(2)}
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">{new Date(t.close_time).toLocaleDateString()}</p>
+                  <div className="flex items-center gap-2 text-[11px]">
+                    <span className={`flex items-center gap-0.5 font-medium ${t.direction === 'Long' ? 'text-primary' : 'text-loss'}`}>
+                      {t.direction === 'Long' ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+                      {t.direction}
+                    </span>
+                    <span className="text-muted-foreground">·</span>
+                    <span className="text-muted-foreground font-medium">{new Date(t.close_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                  </div>
                 </button>
               ))
             )}
@@ -126,100 +141,107 @@ export default function Journal() {
         </div>
 
         {/* Journal editor */}
-        <div className="flex-1 bg-card rounded-xl border border-border p-6 overflow-auto">
+        <div className="flex-1 glass-card rounded-2xl p-8 overflow-auto">
           {selectedTrade ? (
-            <div className="space-y-6">
+            <div className="space-y-8">
+              {/* Header */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🥇</span>
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-warning/10 flex items-center justify-center text-lg">🥇</div>
                   <div>
-                    <h2 className="text-xl font-bold text-foreground">{selectedTrade.symbol}</h2>
-                    <p className="text-sm text-muted-foreground">
-                      {selectedTrade.direction} · Entry ${Number(selectedTrade.entry_price).toFixed(2)} · Exit ${Number(selectedTrade.exit_price).toFixed(2)} · Size {selectedTrade.lot_size}
+                    <div className="flex items-center gap-3">
+                      <h2 className="text-xl font-extrabold text-foreground">{selectedTrade.symbol}</h2>
+                      <span className={`text-[11px] font-bold px-3 py-1 rounded-lg ${
+                        Number(selectedTrade.pnl) >= 0
+                          ? 'bg-profit/10 text-profit border border-profit/20'
+                          : 'bg-loss/10 text-loss border border-loss/20'
+                      }`}>
+                        {Number(selectedTrade.pnl) >= 0 ? 'WIN' : 'LOSS'}
+                      </span>
+                      <span className={`text-lg font-extrabold font-mono-num ${Number(selectedTrade.pnl) >= 0 ? 'text-profit' : 'text-loss'}`}>
+                        {Number(selectedTrade.pnl) >= 0 ? '+' : ''}${Number(selectedTrade.pnl).toFixed(2)}
+                      </span>
+                    </div>
+                    <p className="text-[12px] text-muted-foreground font-medium mt-0.5">
+                      {selectedTrade.direction} · ${Number(selectedTrade.entry_price).toFixed(2)} → ${Number(selectedTrade.exit_price).toFixed(2)} · {selectedTrade.lot_size} lots
                     </p>
                   </div>
-                  <span className={`text-xs font-bold px-3 py-1 rounded-full ${Number(selectedTrade.pnl) >= 0 ? 'bg-profit/20 text-profit' : 'bg-loss/20 text-loss'}`}>
-                    {Number(selectedTrade.pnl) >= 0 ? 'WINNER' : 'LOSER'}
-                  </span>
-                  <span className={`text-lg font-bold ${Number(selectedTrade.pnl) >= 0 ? 'text-profit' : 'text-loss'}`}>
-                    {Number(selectedTrade.pnl) >= 0 ? '+' : ''}${Number(selectedTrade.pnl).toFixed(2)}
-                  </span>
                 </div>
                 <button onClick={handleSave} disabled={saveJournal.isPending}
-                  className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors disabled:opacity-50">
+                  className="flex items-center gap-2 btn-premium text-primary-foreground px-5 py-2.5 rounded-xl font-semibold text-[13px] transition-all duration-200 disabled:opacity-50">
                   <Save className="w-4 h-4" />
                   {saveJournal.isPending ? 'Saving...' : 'Save'}
                 </button>
               </div>
 
-              {/* Pre-trade analysis */}
-              <div>
-                <label className="text-xs font-semibold text-muted-foreground tracking-wider flex items-center gap-2 mb-2">
-                  📋 PRE-TRADE ANALYSIS
-                </label>
-                <textarea value={journal.pre_trade_notes} onChange={e => setJournal(j => ({ ...j, pre_trade_notes: e.target.value }))}
-                  placeholder="What did you see? Plan, thesis, levels, risk..."
-                  className="w-full bg-secondary text-foreground border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary min-h-[100px] resize-y" />
-              </div>
-
-              {/* Post-trade review */}
-              <div>
-                <label className="text-xs font-semibold text-muted-foreground tracking-wider mb-2 block">⏱️ POST-TRADE REVIEW</label>
-                <textarea value={journal.post_trade_notes} onChange={e => setJournal(j => ({ ...j, post_trade_notes: e.target.value }))}
-                  placeholder="What happened? Execution, slippage, improvements..."
-                  className="w-full bg-secondary text-foreground border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary min-h-[100px] resize-y" />
-              </div>
+              {/* Textareas */}
+              {[
+                { label: 'Pre-Trade Analysis', key: 'pre_trade_notes', placeholder: 'What did you see? Plan, thesis, levels, risk...', icon: '📋' },
+                { label: 'Post-Trade Review', key: 'post_trade_notes', placeholder: 'What happened? Execution, slippage, improvements...', icon: '⏱️' },
+              ].map(field => (
+                <div key={field.key}>
+                  <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2 mb-2">
+                    <span>{field.icon}</span> {field.label}
+                  </label>
+                  <textarea
+                    value={journal[field.key as keyof typeof journal] as string}
+                    onChange={e => setJournal(j => ({ ...j, [field.key]: e.target.value }))}
+                    placeholder={field.placeholder}
+                    className="w-full bg-secondary/40 text-foreground border border-border/60 rounded-xl px-4 py-3.5 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 min-h-[100px] resize-y transition-all duration-200 placeholder:text-muted-foreground/40"
+                  />
+                </div>
+              ))}
 
               {/* Risk Reward */}
-              <div className="bg-secondary rounded-lg p-4 flex items-center gap-4">
-                <span className="text-xs font-semibold text-muted-foreground tracking-wider">⚖️ RISK : REWARD</span>
+              <div className="bg-secondary/30 rounded-xl p-5 border border-border/40 flex items-center gap-6">
+                <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">⚖️ Risk : Reward</span>
                 <div className="flex items-center gap-2">
                   <input value={journal.risk_reward.split(':')[0] || '1'} onChange={e => setJournal(j => ({ ...j, risk_reward: `${e.target.value}:${j.risk_reward.split(':')[1] || '2'}` }))}
-                    className="w-12 bg-card text-foreground border border-border rounded px-2 py-1.5 text-sm text-center focus:outline-none focus:ring-2 focus:ring-primary" />
-                  <span className="text-muted-foreground font-bold">:</span>
+                    className="w-14 bg-card text-foreground border border-border rounded-lg px-3 py-2 text-sm text-center font-mono-num focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200" />
+                  <span className="text-muted-foreground font-bold text-lg">:</span>
                   <input value={journal.risk_reward.split(':')[1] || '2'} onChange={e => setJournal(j => ({ ...j, risk_reward: `${j.risk_reward.split(':')[0] || '1'}:${e.target.value}` }))}
-                    className="w-12 bg-card text-foreground border border-border rounded px-2 py-1.5 text-sm text-center focus:outline-none focus:ring-2 focus:ring-primary" />
+                    className="w-14 bg-card text-foreground border border-border rounded-lg px-3 py-2 text-sm text-center font-mono-num focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-5">
                 <div>
-                  <label className="text-xs font-semibold text-muted-foreground tracking-wider mb-2 block">😊 EMOTIONS</label>
+                  <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">😊 Emotions</label>
                   <textarea value={journal.emotions} onChange={e => setJournal(j => ({ ...j, emotions: e.target.value }))}
                     placeholder="Calm, anxious, FOMO, confident..."
-                    className="w-full bg-secondary text-foreground border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary min-h-[80px] resize-y" />
+                    className="w-full bg-secondary/40 text-foreground border border-border/60 rounded-xl px-4 py-3.5 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 min-h-[80px] resize-y transition-all duration-200 placeholder:text-muted-foreground/40" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-muted-foreground tracking-wider mb-2 block">📖 LESSONS LEARNED</label>
+                  <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">📖 Lessons Learned</label>
                   <textarea value={journal.lessons} onChange={e => setJournal(j => ({ ...j, lessons: e.target.value }))}
                     placeholder="Key takeaways to repeat or avoid..."
-                    className="w-full bg-secondary text-foreground border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary min-h-[80px] resize-y" />
+                    className="w-full bg-secondary/40 text-foreground border border-border/60 rounded-xl px-4 py-3.5 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 min-h-[80px] resize-y transition-all duration-200 placeholder:text-muted-foreground/40" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-5">
                 <div>
-                  <label className="text-xs font-semibold text-muted-foreground tracking-wider mb-2 block">🏷️ TAGS</label>
+                  <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">🏷️ Tags</label>
                   <input value={journal.tags} onChange={e => setJournal(j => ({ ...j, tags: e.target.value }))}
                     placeholder="breakout, trend, news (comma separated)"
-                    className="w-full bg-secondary text-foreground border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+                    className="w-full bg-secondary/40 text-foreground border border-border/60 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all duration-200 placeholder:text-muted-foreground/40" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-muted-foreground tracking-wider mb-2 flex items-center justify-between">
-                    <span className="flex items-center gap-1"><Star className="w-4 h-4" /> RATING</span>
-                    <span className={`text-base font-bold ${journal.rating >= 7 ? 'text-profit' : journal.rating >= 4 ? 'text-warning' : 'text-loss'}`}>{journal.rating}/10</span>
+                  <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center justify-between">
+                    <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5" /> Rating</span>
+                    <span className={`text-base font-extrabold font-mono-num ${journal.rating >= 7 ? 'text-profit' : journal.rating >= 4 ? 'text-warning' : 'text-loss'}`}>{journal.rating}/10</span>
                   </label>
                   <input type="range" min={1} max={10} value={journal.rating}
                     onChange={e => setJournal(j => ({ ...j, rating: parseInt(e.target.value) }))}
-                    className="w-full accent-primary" />
+                    className="w-full accent-primary h-2 mt-2" />
                 </div>
               </div>
 
               {/* Execution Checklist */}
               <div>
-                <label className="text-xs font-semibold text-muted-foreground tracking-wider mb-3 flex items-center justify-between">
-                  <span>✅ EXECUTION CHECKLIST</span>
-                  <span className="text-primary">{checkCount}/5</span>
+                <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center justify-between">
+                  <span>✅ Execution Checklist</span>
+                  <span className="text-primary font-mono-num">{checkCount}/5</span>
                 </label>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {[
@@ -231,13 +253,13 @@ export default function Journal() {
                   ].map(item => (
                     <button key={item.key} type="button"
                       onClick={() => setChecklist(c => ({ ...c, [item.key]: !c[item.key as keyof typeof c] }))}
-                      className={`flex items-center gap-2 p-3 rounded-lg border text-sm text-left transition-colors ${
+                      className={`flex items-center gap-2.5 p-3.5 rounded-xl border text-[13px] text-left transition-all duration-200 ${
                         checklist[item.key as keyof typeof checklist]
-                          ? 'bg-primary/10 border-primary/50 text-foreground'
-                          : 'bg-secondary border-border text-muted-foreground'
+                          ? 'bg-primary/8 border-primary/30 text-foreground'
+                          : 'bg-secondary/30 border-border/60 text-muted-foreground hover:border-border'
                       }`}>
-                      <div className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 ${
-                        checklist[item.key as keyof typeof checklist] ? 'bg-primary border-primary' : 'border-muted-foreground'
+                      <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-all duration-200 ${
+                        checklist[item.key as keyof typeof checklist] ? 'bg-primary border-primary shadow-[0_0_8px_-2px_hsl(221,83%,53%,0.5)]' : 'border-muted-foreground/40'
                       }`}>
                         {checklist[item.key as keyof typeof checklist] && <Check className="w-3 h-3 text-primary-foreground" />}
                       </div>
@@ -249,50 +271,27 @@ export default function Journal() {
 
               {/* Screenshots */}
               <div>
-                <label className="text-xs font-semibold text-muted-foreground tracking-wider mb-3 block">🖼️ SCREENSHOTS</label>
+                <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 block">🖼️ Screenshots</label>
                 <div className="flex flex-wrap gap-3">
                   {screenshots.map(s => (
-                    <div key={s.id} className="w-32 h-24 rounded-lg overflow-hidden border border-border">
-                      <img src={s.image_url} alt="Trade screenshot" className="w-full h-full object-cover" />
+                    <div key={s.id} className="w-36 h-28 rounded-xl overflow-hidden border border-border/60 hover:border-primary/30 transition-all duration-200 group">
+                      <img src={s.image_url} alt="Trade screenshot" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     </div>
                   ))}
                   <button type="button" onClick={() => fileInputRef.current?.click()}
-                    className="w-32 h-24 rounded-lg border-2 border-dashed border-border flex flex-col items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-colors">
-                    <ImagePlus className="w-6 h-6 mb-1" />
-                    <span className="text-xs">Add Image</span>
+                    className="w-36 h-28 rounded-xl border-2 border-dashed border-border/60 flex flex-col items-center justify-center text-muted-foreground hover:border-primary/40 hover:text-primary transition-all duration-200 group">
+                    <ImagePlus className="w-6 h-6 mb-1.5 group-hover:scale-110 transition-transform duration-200" />
+                    <span className="text-[11px] font-medium">Add Image</span>
                   </button>
                   <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
-                </div>
-              </div>
-
-              {/* Trade Summary */}
-              <div className="bg-secondary rounded-xl p-4 flex items-center gap-6">
-                <span className="text-2xl">🥇</span>
-                <div className="flex items-center gap-4 text-sm">
-                  <span className="font-semibold text-foreground">{selectedTrade.symbol}</span>
-                  <span className={`px-2 py-0.5 rounded text-xs font-medium ${selectedTrade.direction === 'Long' ? 'bg-primary/20 text-primary' : 'bg-loss/20 text-loss'}`}>{selectedTrade.direction}</span>
-                  <div>
-                    <span className="text-muted-foreground text-xs">ENTRY</span>
-                    <p className="font-mono text-foreground">${Number(selectedTrade.entry_price).toFixed(2)}</p>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground text-xs">EXIT</span>
-                    <p className="font-mono text-foreground">${Number(selectedTrade.exit_price).toFixed(2)}</p>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground text-xs">P&L</span>
-                    <p className={`font-bold ${Number(selectedTrade.pnl) >= 0 ? 'text-profit' : 'text-loss'}`}>
-                      {Number(selectedTrade.pnl) >= 0 ? '+' : ''}${Number(selectedTrade.pnl).toFixed(2)}
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
           ) : (
             <div className="h-full flex items-center justify-center text-muted-foreground">
               <div className="text-center">
-                <BookOpen className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                <p>Select a trade to write your journal entry</p>
+                <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-20" />
+                <p className="text-sm font-medium">Select a trade to write your journal entry</p>
               </div>
             </div>
           )}
