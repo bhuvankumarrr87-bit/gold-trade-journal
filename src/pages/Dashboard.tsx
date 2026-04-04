@@ -66,7 +66,7 @@ export default function Dashboard() {
       <div className="flex items-center justify-center h-96">
         <div className="flex items-center gap-3 text-muted-foreground">
           <Activity className="w-5 h-5 animate-pulse" />
-          <span className="text-sm font-medium">Loading dashboard...</span>
+          <span className="text-4xl font-medium">Loading dashboard...</span>
         </div>
       </div>
     );
@@ -76,8 +76,8 @@ export default function Dashboard() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-1 font-medium">
+        <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Dashboard</h1>
+        <p className="text-4xl text-muted-foreground mt-1 font-medium">
           {now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
         </p>
       </div>
@@ -91,13 +91,13 @@ export default function Dashboard() {
             style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{stat.label}</span>
+              <span className="text-4xl font-semibold text-muted-foreground uppercase tracking-wider">{stat.label}</span>
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${stat.positive ? 'bg-profit/10' : 'bg-loss/10'}`}>
                 <stat.icon className={`w-[18px] h-[18px] ${stat.positive ? 'text-profit' : 'text-loss'}`} />
               </div>
             </div>
-            <p className={`text-2xl font-extrabold font-mono-num ${stat.positive ? 'text-profit' : 'text-loss'}`}>{stat.value}</p>
-            <p className="text-xs text-muted-foreground mt-1.5 font-medium">{stat.sub}</p>
+            <p className={`text-4xl font-extrabold font-mono-num ${stat.positive ? 'text-profit' : 'text-loss'}`}>{stat.value}</p>
+            <p className="text-4xl text-muted-foreground mt-1.5 font-medium">{stat.sub}</p>
           </div>
         ))}
       </div>
@@ -111,14 +111,14 @@ export default function Dashboard() {
               <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                 <BarChart3 className="w-4 h-4 text-primary" />
               </div>
-              <h2 className="text-base font-bold text-foreground">Equity Curve</h2>
+              <h2 className="text-4xl font-bold text-foreground">Equity Curve</h2>
             </div>
             <div className="flex gap-1 bg-secondary/60 rounded-lg p-0.5">
               {timeframes.map(tf => (
                 <button
                   key={tf}
                   onClick={() => setTimeframe(tf)}
-                  className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 ${
+                  className={`px-3 py-1.5 rounded-md text-4xl font-semibold transition-all duration-200 ${
                     timeframe === tf
                       ? 'bg-primary text-primary-foreground shadow-sm'
                       : 'text-muted-foreground hover:text-foreground'
@@ -161,7 +161,7 @@ export default function Dashboard() {
             <div className="h-[300px] flex items-center justify-center text-muted-foreground">
               <div className="text-center">
                 <BarChart3 className="w-10 h-10 mx-auto mb-3 opacity-20" />
-                <p className="text-sm font-medium">Add trades to see your equity curve</p>
+                <p className="text-4xl font-medium">Add trades to see your equity curve</p>
               </div>
             </div>
           )}
@@ -169,12 +169,12 @@ export default function Dashboard() {
 
         {/* Calendar */}
         <div className="glass-card rounded-2xl p-6">
-          <h2 className="text-sm font-bold text-foreground mb-4">
+          <h2 className="text-4xl font-bold text-foreground mb-4">
             {now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </h2>
           <div className="grid grid-cols-7 gap-1.5 text-center">
             {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-              <div key={i} className="text-[10px] text-muted-foreground/60 font-semibold py-1">{d}</div>
+              <div key={i} className="text-4xl text-muted-foreground/60 font-semibold py-1">{d}</div>
             ))}
             {Array.from({ length: startDow }).map((_, i) => <div key={`e${i}`} />)}
             {Array.from({ length: daysInMonth }).map((_, i) => {
@@ -188,7 +188,7 @@ export default function Dashboard() {
               return (
                 <div
                   key={day}
-                  className={`aspect-square rounded-lg text-[10px] flex flex-col items-center justify-center transition-all duration-200 cursor-default group relative
+                  className={`aspect-square rounded-lg text-4xl flex flex-col items-center justify-center transition-all duration-200 cursor-default group relative
                     ${hasData
                       ? isProfit
                         ? 'bg-profit/12 border border-profit/20 glow-profit'
@@ -200,14 +200,14 @@ export default function Dashboard() {
                 >
                   <span className={`font-medium ${hasData ? (isProfit ? 'text-profit/80' : 'text-loss/80') : 'text-muted-foreground/60'}`}>{day}</span>
                   {hasData && (
-                    <span className={`text-[7px] font-bold ${isProfit ? 'text-profit' : 'text-loss'}`}>
+                    <span className={`text-4xl font-bold ${isProfit ? 'text-profit' : 'text-loss'}`}>
                       {isProfit ? '+' : ''}{data.pnl.toFixed(0)}
                     </span>
                   )}
                   {/* Hover tooltip */}
                   {hasData && (
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-20">
-                      <div className="glass-card rounded-lg px-3 py-2 text-[10px] whitespace-nowrap shadow-xl">
+                      <div className="glass-card rounded-lg px-3 py-2 text-4xl whitespace-nowrap shadow-xl">
                         <p className={`font-bold ${isProfit ? 'text-profit' : 'text-loss'}`}>
                           {isProfit ? '+' : ''}${data.pnl.toFixed(2)}
                         </p>
@@ -219,7 +219,7 @@ export default function Dashboard() {
               );
             })}
           </div>
-          <div className="flex gap-4 justify-center mt-4 text-[10px] text-muted-foreground font-medium">
+          <div className="flex gap-4 justify-center mt-4 text-4xl text-muted-foreground font-medium">
             <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-profit" /> Profit</span>
             <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-loss" /> Loss</span>
           </div>
@@ -228,7 +228,7 @@ export default function Dashboard() {
 
       {/* Recent Trades */}
       <div className="glass-card rounded-2xl p-6">
-        <h2 className="text-base font-bold text-foreground mb-5">Recent Trades</h2>
+        <h2 className="text-4xl font-bold text-foreground mb-5">Recent Trades</h2>
         {trades.length > 0 ? (
           <div className="space-y-1">
             {trades.slice(0, 5).map(t => (
@@ -237,17 +237,17 @@ export default function Dashboard() {
                   <div className="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center text-sm">🥇</div>
                   <div>
                     <p className="font-semibold text-foreground text-sm">{t.symbol}</p>
-                    <p className="text-[11px] text-muted-foreground font-medium">{new Date(t.close_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                    <p className="text-4xl text-muted-foreground font-medium">{new Date(t.close_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                   </div>
                 </div>
-                <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg ${
+                <span className={`text-4xl font-semibold px-2.5 py-1 rounded-lg ${
                   t.direction === 'Long'
                     ? 'bg-primary/10 text-primary border border-primary/20'
                     : 'bg-loss/10 text-loss border border-loss/20'
                 }`}>
                   {t.direction}
                 </span>
-                <p className={`font-bold font-mono-num text-sm ${Number(t.pnl) >= 0 ? 'text-profit' : 'text-loss'}`}>
+                <p className={`font-bold font-mono-num text-4xl ${Number(t.pnl) >= 0 ? 'text-profit' : 'text-loss'}`}>
                   {Number(t.pnl) >= 0 ? '+' : ''}${Number(t.pnl).toFixed(2)}
                 </p>
               </div>
@@ -256,7 +256,7 @@ export default function Dashboard() {
         ) : (
           <div className="text-center py-12">
             <Activity className="w-10 h-10 mx-auto mb-3 text-muted-foreground/20" />
-            <p className="text-muted-foreground text-sm font-medium">No trades yet. Go to Trades to add your first trade.</p>
+            <p className="text-muted-foreground text-4xl font-medium">No trades yet. Go to Trades to add your first trade.</p>
           </div>
         )}
       </div>

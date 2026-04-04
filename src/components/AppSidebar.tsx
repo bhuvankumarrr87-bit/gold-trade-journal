@@ -32,7 +32,7 @@ export default function AppSidebar() {
         </div>
         {!collapsed && (
           <div className="overflow-hidden">
-            <span className="text-base font-bold text-foreground tracking-tight whitespace-nowrap">DaddyFX Book</span>
+            <span className="text-4xl font-bold text-foreground tracking-tight whitespace-nowrap">DaddyFX Book</span>
           </div>
         )}
       </div>
@@ -40,7 +40,7 @@ export default function AppSidebar() {
       {/* Navigation */}
       <nav className="flex-1 px-3 mt-2 space-y-1">
         {!collapsed && (
-          <p className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-[0.15em] px-3 mb-2">Navigation</p>
+          <p className="text-4xl font-semibold text-muted-foreground/60 uppercase tracking-[0.15em] px-3 mb-2">Navigation</p>
         )}
         {navItems.map(item => {
           const isActive = location.pathname === item.to;
@@ -48,7 +48,7 @@ export default function AppSidebar() {
             <RouterNavLink
               key={item.to}
               to={item.to}
-              className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 group ${
+              className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} px-3 py-2.5 rounded-xl text-4xl font-medium transition-all duration-200 group ${
                 isActive
                   ? "bg-primary/12 text-primary shadow-[inset_0_0_0_1px_hsl(221,83%,53%,0.15)]"
                   : "text-sidebar-foreground hover:text-foreground hover:bg-accent/60"
@@ -63,10 +63,10 @@ export default function AppSidebar() {
 
       {/* User section */}
       <div className={`p-4 border-t border-sidebar-border space-y-3 ${collapsed ? 'items-center flex flex-col' : ''}`}>
-        {!collapsed && <p className="text-[11px] text-muted-foreground truncate">{user?.email}</p>}
+        {!collapsed && <p className="text-4xl text-muted-foreground truncate">{user?.email}</p>}
         <button
           onClick={signOut}
-          className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2'} text-[13px] text-muted-foreground hover:text-foreground transition-all duration-200 w-full group`}
+          className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2'} text-4xl text-muted-foreground hover:text-foreground transition-all duration-200 w-full group`}
         >
           <LogOut className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
           {!collapsed && <span>Sign Out</span>}

@@ -64,7 +64,7 @@ export default function Trades() {
       <div className="flex items-center justify-center h-96">
         <div className="flex items-center gap-3 text-muted-foreground">
           <Activity className="w-5 h-5 animate-pulse" />
-          <span className="text-sm font-medium">Loading trades...</span>
+          <span className="text-4xl font-medium">Loading trades...</span>
         </div>
       </div>
     );
@@ -74,16 +74,16 @@ export default function Trades() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Trades</h1>
-          <p className="text-sm text-muted-foreground mt-1 font-medium">{trades.length} trades recorded</p>
+          <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Trades</h1>
+          <p className="text-4xl text-muted-foreground mt-1 font-medium">{trades.length} trades recorded</p>
         </div>
         <div className="flex gap-3">
-          <button className="bg-secondary/60 text-secondary-foreground px-4 py-2.5 rounded-xl font-semibold text-[13px] border border-border hover:bg-accent/60 transition-all duration-200 opacity-50 cursor-not-allowed">
+          <button className="bg-secondary/60 text-secondary-foreground px-4 py-2.5 rounded-xl font-semibold text-4xl border border-border hover:bg-accent/60 transition-all duration-200 opacity-50 cursor-not-allowed">
             Connect MT4/MT5
           </button>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="flex items-center gap-2 btn-premium text-primary-foreground px-5 py-2.5 rounded-xl font-semibold text-[13px] transition-all duration-200"
+            className="flex items-center gap-2 btn-premium text-primary-foreground px-5 py-2.5 rounded-xl font-semibold text-4xl transition-all duration-200"
           >
             <Plus className="w-4 h-4" />
             Add Trade
@@ -94,7 +94,7 @@ export default function Trades() {
       {showForm && (
         <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-6 space-y-5 animate-fade-up">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-foreground">New XAUUSD Trade</h3>
+            <h3 className="text-4xl font-bold text-foreground">New XAUUSD Trade</h3>
             <button type="button" onClick={() => setShowForm(false)} className="text-muted-foreground hover:text-foreground transition-colors">
               <X className="w-5 h-5" />
             </button>
@@ -102,7 +102,7 @@ export default function Trades() {
           <div className="flex gap-2">
             {(['Long', 'Short'] as const).map(d => (
               <button key={d} type="button" onClick={() => setForm(f => ({ ...f, direction: d }))}
-                className={`flex-1 py-3 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 ${
+                className={`flex-1 py-3 rounded-xl font-semibold text-4xl transition-all duration-200 flex items-center justify-center gap-2 ${
                   form.direction === d
                     ? (d === 'Long' ? 'btn-premium text-primary-foreground' : 'bg-loss text-primary-foreground shadow-[0_4px_14px_-3px_hsl(0,84%,60%,0.5)]')
                     : 'bg-secondary/60 text-secondary-foreground border border-border hover:bg-accent/60'
@@ -119,34 +119,34 @@ export default function Trades() {
               { label: 'Lot Size', key: 'lotSize', placeholder: '0.1' },
             ].map(field => (
               <div key={field.key}>
-                <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">{field.label}</label>
+                <label className="text-4xl font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">{field.label}</label>
                 <input type="number" step="0.01" value={form[field.key as keyof typeof form]} onChange={e => setForm(f => ({ ...f, [field.key]: e.target.value }))}
-                  placeholder={field.placeholder} className="w-full bg-secondary/60 text-foreground border border-border rounded-xl px-4 py-3 text-sm font-mono-num focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 placeholder:text-muted-foreground/40" required />
+                  placeholder={field.placeholder} className="w-full bg-secondary/60 text-foreground border border-border rounded-xl px-4 py-3 text-4xl font-mono-num focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 placeholder:text-muted-foreground/40" required />
               </div>
             ))}
             <div>
-              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Open Date</label>
+              <label className="text-4xl font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Open Date</label>
               <input type="datetime-local" value={form.openDate} onChange={e => setForm(f => ({ ...f, openDate: e.target.value }))}
-                className="w-full bg-secondary/60 text-foreground border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200" />
+                className="w-full bg-secondary/60 text-foreground border border-border rounded-xl px-4 py-3 text-4xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200" />
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Close Date</label>
+              <label className="text-4xl font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Close Date</label>
               <input type="datetime-local" value={form.closeDate} onChange={e => setForm(f => ({ ...f, closeDate: e.target.value }))}
-                className="w-full bg-secondary/60 text-foreground border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200" />
+                className="w-full bg-secondary/60 text-foreground border border-border rounded-xl px-4 py-3 text-4xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200" />
             </div>
             <div className="flex items-end">
               {previewPnl !== null && (
-                <div className={`text-xl font-extrabold font-mono-num ${previewPnl >= 0 ? 'text-profit' : 'text-loss'}`}>
+                <div className={`text-4xl font-extrabold font-mono-num ${previewPnl >= 0 ? 'text-profit' : 'text-loss'}`}>
                   {previewPnl >= 0 ? '+' : ''}${previewPnl.toFixed(2)}
                 </div>
               )}
             </div>
           </div>
           <div className="flex gap-3 pt-1">
-            <button type="submit" disabled={addTrade.isPending} className="btn-premium text-primary-foreground px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 disabled:opacity-50">
+            <button type="submit" disabled={addTrade.isPending} className="btn-premium text-primary-foreground px-6 py-3 rounded-xl font-semibold text-4xl transition-all duration-200 disabled:opacity-50">
               {addTrade.isPending ? 'Saving...' : 'Save Trade'}
             </button>
-            <button type="button" onClick={() => setShowForm(false)} className="bg-secondary/60 text-secondary-foreground px-6 py-3 rounded-xl font-semibold text-sm border border-border hover:bg-accent/60 transition-all duration-200">Cancel</button>
+            <button type="button" onClick={() => setShowForm(false)} className="bg-secondary/60 text-secondary-foreground px-6 py-3 rounded-xl font-semibold text-4xl border border-border hover:bg-accent/60 transition-all duration-200">Cancel</button>
           </div>
         </form>
       )}
@@ -158,7 +158,7 @@ export default function Trades() {
             <thead>
               <tr className="border-b border-border/60">
                 {['Date', 'Symbol', 'Type', 'Entry', 'Exit', 'Size', 'P&L', 'Source', ''].map(h => (
-                  <th key={h} className={`text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-4 ${['Entry', 'Exit', 'Size', 'P&L'].includes(h) ? 'text-right' : h === 'Source' ? 'text-center' : 'text-left'}`}>{h}</th>
+                  <th key={h} className={`text-4xl font-semibold text-muted-foreground uppercase tracking-wider px-5 py-4 ${['Entry', 'Exit', 'Size', 'P&L'].includes(h) ? 'text-right' : h === 'Source' ? 'text-center' : 'text-left'}`}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -166,14 +166,14 @@ export default function Trades() {
               {trades.length === 0 ? (
                 <tr><td colSpan={9} className="text-center text-muted-foreground py-16">
                   <Activity className="w-10 h-10 mx-auto mb-3 opacity-20" />
-                  <p className="text-sm font-medium">No trades yet. Click "Add Trade" to get started.</p>
+                  <p className="text-4xl font-medium">No trades yet. Click "Add Trade" to get started.</p>
                 </td></tr>
               ) : (
                 trades.map(t => (
                   <tr key={t.id} className="border-b border-border/40 last:border-0 hover:bg-secondary/30 transition-all duration-150 group">
                     <td className="px-5 py-4">
-                      <p className="text-[12px] text-foreground font-medium">{new Date(t.open_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
-                      <p className="text-[11px] text-muted-foreground">{new Date(t.close_time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
+                      <p className="text-4xl text-foreground font-medium">{new Date(t.open_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+                      <p className="text-4xl text-muted-foreground">{new Date(t.close_time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2.5">
@@ -182,7 +182,7 @@ export default function Trades() {
                       </div>
                     </td>
                     <td className="px-5 py-4">
-                      <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg inline-flex items-center gap-1 ${
+                      <span className={`text-4xl font-semibold px-2.5 py-1 rounded-lg inline-flex items-center gap-1 ${
                         t.direction === 'Long'
                           ? 'bg-primary/10 text-primary border border-primary/20'
                           : 'bg-loss/10 text-loss border border-loss/20'
@@ -191,11 +191,11 @@ export default function Trades() {
                         {t.direction}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-right font-mono-num text-sm text-foreground">${Number(t.entry_price).toFixed(2)}</td>
-                    <td className="px-5 py-4 text-right font-mono-num text-sm text-foreground">${Number(t.exit_price).toFixed(2)}</td>
-                    <td className="px-5 py-4 text-right text-sm text-foreground font-medium">{t.lot_size}</td>
+                    <td className="px-5 py-4 text-right font-mono-num text-4xl text-foreground">${Number(t.entry_price).toFixed(2)}</td>
+                    <td className="px-5 py-4 text-right font-mono-num text-4xl text-foreground">${Number(t.exit_price).toFixed(2)}</td>
+                    <td className="px-5 py-4 text-right text-4xl text-foreground font-medium">{t.lot_size}</td>
                     <td className="px-5 py-4 text-right">
-                      <span className={`font-bold font-mono-num text-sm px-2.5 py-1 rounded-lg ${
+                      <span className={`font-bold font-mono-num text-4xl px-2.5 py-1 rounded-lg ${
                         Number(t.pnl) >= 0
                           ? 'text-profit bg-profit/8'
                           : 'text-loss bg-loss/8'
@@ -204,7 +204,7 @@ export default function Trades() {
                       </span>
                     </td>
                     <td className="px-5 py-4 text-center">
-                      <span className="text-[11px] bg-secondary/60 text-secondary-foreground px-2.5 py-1 rounded-lg font-medium border border-border/50">{t.source}</span>
+                      <span className="text-4xl bg-secondary/60 text-secondary-foreground px-2.5 py-1 rounded-lg font-medium border border-border/50">{t.source}</span>
                     </td>
                     <td className="px-5 py-4">
                       <button onClick={() => handleDelete(t.id)} className="text-muted-foreground/40 hover:text-loss transition-all duration-200 opacity-0 group-hover:opacity-100">

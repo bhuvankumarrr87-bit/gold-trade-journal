@@ -121,7 +121,7 @@ export default function Analysis() {
       <div className="flex items-center justify-center h-96">
         <div className="flex items-center gap-3 text-muted-foreground">
           <Activity className="w-5 h-5 animate-pulse" />
-          <span className="text-sm font-medium">Loading analysis...</span>
+          <span className="text-4xl font-medium">Loading analysis...</span>
         </div>
       </div>
     );
@@ -130,8 +130,8 @@ export default function Analysis() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Analysis</h1>
-        <p className="text-sm text-muted-foreground mt-1 font-medium">
+        <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Analysis</h1>
+        <p className="text-4xl text-muted-foreground mt-1 font-medium">
           {now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
         </p>
       </div>
@@ -139,7 +139,7 @@ export default function Analysis() {
       {/* Quick Stats + Equity */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="glass-card rounded-2xl p-6">
-          <h3 className="text-sm font-bold text-foreground mb-5 flex items-center gap-2">
+          <h3 className="text-4xl font-bold text-foreground mb-5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center"><BarChart3 className="w-3.5 h-3.5 text-primary" /></div>
             Quick Stats
           </h3>
@@ -148,16 +148,16 @@ export default function Analysis() {
               <div key={s.label} className="bg-secondary/30 rounded-xl p-3.5 border border-border/30 hover:border-border/60 transition-all duration-200">
                 <div className="flex items-center gap-1.5 mb-1">
                   <s.icon className={`w-3 h-3 ${s.color ? 'text-profit' : 'text-loss'}`} />
-                  <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">{s.label}</p>
+                  <p className="text-4xl text-muted-foreground font-semibold uppercase tracking-wider">{s.label}</p>
                 </div>
-                <p className={`font-bold text-sm font-mono-num ${s.color === undefined ? 'text-foreground' : s.color ? 'text-profit' : 'text-loss'}`}>{s.value}</p>
+                <p className={`font-bold text-4xl font-mono-num ${s.color === undefined ? 'text-foreground' : s.color ? 'text-profit' : 'text-loss'}`}>{s.value}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="lg:col-span-2 glass-card rounded-2xl p-6">
-          <h3 className="text-sm font-bold text-foreground mb-5 flex items-center gap-2">
+          <h3 className="text-4xl font-bold text-foreground mb-5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center"><TrendingUp className="w-3.5 h-3.5 text-primary" /></div>
             Equity Curve
           </h3>
@@ -177,7 +177,7 @@ export default function Analysis() {
               </AreaChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-[260px] flex items-center justify-center text-muted-foreground text-sm font-medium">Add trades to see equity curve</div>
+            <div className="h-[260px] flex items-center justify-center text-muted-foreground text-4xl font-medium">Add trades to see equity curve</div>
           )}
         </div>
       </div>
@@ -185,7 +185,7 @@ export default function Analysis() {
       {/* Long vs Short + Day Perf + Session */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="glass-card rounded-2xl p-6">
-          <h3 className="text-sm font-bold text-foreground mb-5 flex items-center gap-2">
+          <h3 className="text-4xl font-bold text-foreground mb-5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center"><Activity className="w-3.5 h-3.5 text-primary" /></div>
             Long vs Short
           </h3>
@@ -196,12 +196,12 @@ export default function Analysis() {
             ].map(d => (
               <div key={d.label} className="bg-secondary/30 rounded-xl p-4 border border-border/30">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-md ${d.isLong ? 'bg-primary/10 text-primary' : 'bg-loss/10 text-loss'}`}>{d.label}</span>
+                  <span className={`text-4xl font-semibold px-2 py-0.5 rounded-md ${d.isLong ? 'bg-primary/10 text-primary' : 'bg-loss/10 text-loss'}`}>{d.label}</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <div><p className="text-[10px] text-muted-foreground font-medium mb-0.5">Trades</p><p className="text-sm font-bold text-foreground font-mono-num">{d.trades.length}</p></div>
-                  <div><p className="text-[10px] text-muted-foreground font-medium mb-0.5">P&L</p><p className={`text-sm font-bold font-mono-num ${d.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>${d.pnl.toFixed(2)}</p></div>
-                  <div><p className="text-[10px] text-muted-foreground font-medium mb-0.5">Win %</p><p className="text-sm font-bold text-foreground font-mono-num">{d.winRate.toFixed(0)}%</p></div>
+                  <div><p className="text-4xl text-muted-foreground font-medium mb-0.5">Trades</p><p className="text-4xl font-bold text-foreground font-mono-num">{d.trades.length}</p></div>
+                  <div><p className="text-4xl text-muted-foreground font-medium mb-0.5">P&L</p><p className={`text-4xl font-bold font-mono-num ${d.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>${d.pnl.toFixed(2)}</p></div>
+                  <div><p className="text-4xl text-muted-foreground font-medium mb-0.5">Win %</p><p className="text-4xl font-bold text-foreground font-mono-num">{d.winRate.toFixed(0)}%</p></div>
                 </div>
               </div>
             ))}
@@ -209,21 +209,21 @@ export default function Analysis() {
         </div>
 
         <div className="glass-card rounded-2xl p-6">
-          <h3 className="text-sm font-bold text-foreground mb-5 flex items-center gap-2">
+          <h3 className="text-4xl font-bold text-foreground mb-5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center"><Calendar className="w-3.5 h-3.5 text-primary" /></div>
             Day Performance
           </h3>
           <div className="space-y-2.5">
             {dayPerf.map(d => (
               <div key={d.day} className="flex items-center gap-3">
-                <span className="text-[11px] text-muted-foreground font-semibold w-8">{d.day}</span>
+                <span className="text-4xl text-muted-foreground font-semibold w-8">{d.day}</span>
                 <div className="flex-1 h-6 bg-secondary/30 rounded-lg overflow-hidden relative border border-border/20">
                   {d.count > 0 && (
                     <div className={`h-full rounded-lg transition-all duration-500 ${d.pnl >= 0 ? 'bg-gradient-to-r from-primary/60 to-primary/30' : 'bg-gradient-to-r from-loss/60 to-loss/30'}`}
                       style={{ width: `${Math.min(Math.abs(d.pnl) / (Math.max(...dayPerf.map(x => Math.abs(x.pnl))) || 1) * 100, 100)}%` }} />
                   )}
                 </div>
-                <span className={`text-[11px] font-bold w-16 text-right font-mono-num ${d.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>
+                <span className={`text-4xl font-bold w-16 text-right font-mono-num ${d.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>
                   {d.count > 0 ? `$${d.pnl.toFixed(0)}` : '—'}
                 </span>
               </div>
@@ -232,18 +232,18 @@ export default function Analysis() {
         </div>
 
         <div className="glass-card rounded-2xl p-6">
-          <h3 className="text-sm font-bold text-foreground mb-5 flex items-center gap-2">
+          <h3 className="text-4xl font-bold text-foreground mb-5 flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center"><Globe className="w-3.5 h-3.5 text-primary" /></div>
             Session Performance
           </h3>
           <div className="space-y-3">
             {sessionPerf.map(s => (
               <div key={s.name} className="bg-secondary/30 rounded-xl p-4 border border-border/30">
-                <p className="font-semibold text-foreground text-sm mb-2">{s.name}</p>
+                <p className="font-semibold text-foreground text-4xl mb-2">{s.name}</p>
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <div><p className="text-[10px] text-muted-foreground font-medium mb-0.5">P&L</p><p className={`text-xs font-bold font-mono-num ${s.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>${s.pnl.toFixed(0)}</p></div>
-                  <div><p className="text-[10px] text-muted-foreground font-medium mb-0.5">Trades</p><p className="text-xs font-bold text-foreground font-mono-num">{s.count}</p></div>
-                  <div><p className="text-[10px] text-muted-foreground font-medium mb-0.5">Win %</p><p className="text-xs font-bold text-foreground font-mono-num">{s.count ? (s.wins / s.count * 100).toFixed(0) : 0}%</p></div>
+                  <div><p className="text-4xl text-muted-foreground font-medium mb-0.5">P&L</p><p className={`text-4xl font-bold font-mono-num ${s.pnl >= 0 ? 'text-profit' : 'text-loss'}`}>${s.pnl.toFixed(0)}</p></div>
+                  <div><p className="text-4xl text-muted-foreground font-medium mb-0.5">Trades</p><p className="text-4xl font-bold text-foreground font-mono-num">{s.count}</p></div>
+                  <div><p className="text-4xl text-muted-foreground font-medium mb-0.5">Win %</p><p className="text-4xl font-bold text-foreground font-mono-num">{s.count ? (s.wins / s.count * 100).toFixed(0) : 0}%</p></div>
                 </div>
               </div>
             ))}
@@ -254,13 +254,13 @@ export default function Analysis() {
       {/* Calendar + Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="glass-card rounded-2xl p-6">
-          <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
+          <h3 className="text-4xl font-bold text-foreground mb-4 flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center"><Calendar className="w-3.5 h-3.5 text-primary" /></div>
             Trading Calendar · {now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </h3>
           <div className="grid grid-cols-7 gap-1.5 text-center">
             {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map(d => (
-              <div key={d} className="text-[9px] text-muted-foreground/50 py-1 font-bold tracking-wider">{d}</div>
+              <div key={d} className="text-4xl text-muted-foreground/50 py-1 font-bold tracking-wider">{d}</div>
             ))}
             {Array.from({ length: startDow }).map((_, i) => <div key={`e${i}`} />)}
             {Array.from({ length: daysInMonth }).map((_, i) => {
@@ -272,17 +272,17 @@ export default function Analysis() {
               const isToday = day === now.getDate();
 
               return (
-                <div key={day} className={`aspect-square rounded-lg text-xs flex flex-col items-center justify-center transition-all duration-200 cursor-default group relative
+                <div key={day} className={`aspect-square rounded-lg text-4xl flex flex-col items-center justify-center transition-all duration-200 cursor-default group relative
                   ${hasData
                     ? isProfit ? 'bg-profit/12 border border-profit/20 glow-profit' : 'bg-loss/12 border border-loss/20 glow-loss'
                     : 'bg-secondary/20 border border-transparent hover:border-border/40'
                   } ${isToday ? 'ring-1 ring-primary/40' : ''}`}>
-                  <span className={`text-[10px] font-medium ${hasData ? (isProfit ? 'text-profit/80' : 'text-loss/80') : 'text-muted-foreground/50'}`}>{day}</span>
+                  <span className={`text-4xl font-medium ${hasData ? (isProfit ? 'text-profit/80' : 'text-loss/80') : 'text-muted-foreground/50'}`}>{day}</span>
                   {hasData && (
                     <>
-                      <span className={`text-[7px] font-bold ${isProfit ? 'text-profit' : 'text-loss'}`}>${Math.abs(data.pnl).toFixed(0)}</span>
+                      <span className={`text-4xl font-bold ${isProfit ? 'text-profit' : 'text-loss'}`}>${Math.abs(data.pnl).toFixed(0)}</span>
                       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-20">
-                        <div className="glass-card rounded-lg px-3 py-2 text-[10px] whitespace-nowrap shadow-xl">
+                        <div className="glass-card rounded-lg px-3 py-2 text-4xl whitespace-nowrap shadow-xl">
                           <p className={`font-bold ${isProfit ? 'text-profit' : 'text-loss'}`}>{isProfit ? '+' : '-'}${Math.abs(data.pnl).toFixed(2)}</p>
                           <p className="text-muted-foreground">{data.count} trade{data.count > 1 ? 's' : ''}</p>
                         </div>
@@ -293,14 +293,14 @@ export default function Analysis() {
               );
             })}
           </div>
-          <div className="flex gap-4 justify-center mt-4 text-[10px] text-muted-foreground font-medium">
+          <div className="flex gap-4 justify-center mt-4 text-4xl text-muted-foreground font-medium">
             <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-profit" /> Profit</span>
             <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-loss" /> Loss</span>
           </div>
         </div>
 
         <div className="glass-card rounded-2xl p-6">
-          <h3 className="text-sm font-bold text-foreground mb-5">Win/Loss Distribution</h3>
+          <h3 className="text-4xl font-bold text-foreground mb-5">Win/Loss Distribution</h3>
           {trades.length > 0 ? (
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={distData}>
@@ -311,14 +311,14 @@ export default function Analysis() {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-[220px] flex items-center justify-center text-muted-foreground text-sm font-medium">Add trades to see distribution</div>
+            <div className="h-[220px] flex items-center justify-center text-muted-foreground text-4xl font-medium">Add trades to see distribution</div>
           )}
         </div>
       </div>
 
       {/* Detailed Stats */}
       <div className="glass-card rounded-2xl p-6">
-        <h3 className="text-base font-bold text-foreground mb-6">Detailed Statistics</h3>
+        <h3 className="text-4xl font-bold text-foreground mb-6">Detailed Statistics</h3>
         <div className="grid grid-cols-2 gap-x-12">
           {[
             [
@@ -344,8 +344,8 @@ export default function Analysis() {
             <div key={ci} className="space-y-0">
               {col.map(s => (
                 <div key={s.l} className="flex justify-between py-2.5 border-b border-border/30 last:border-0">
-                  <span className="text-[13px] text-muted-foreground">{s.l}</span>
-                  <span className={`text-[13px] font-bold font-mono-num ${s.c === undefined ? 'text-foreground' : s.c ? 'text-profit' : 'text-loss'}`}>{s.v}</span>
+                  <span className="text-4xl text-muted-foreground">{s.l}</span>
+                  <span className={`text-4xl font-bold font-mono-num ${s.c === undefined ? 'text-foreground' : s.c ? 'text-profit' : 'text-loss'}`}>{s.v}</span>
                 </div>
               ))}
             </div>
