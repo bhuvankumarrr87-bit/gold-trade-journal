@@ -28,7 +28,12 @@ export default function AppSidebar() {
         <div className="w-9 h-9 rounded-xl btn-premium flex items-center justify-center shrink-0">
           <TrendingUp className="w-5 h-5 text-primary-foreground" />
         </div>
-        {!collapsed && <span className="text-base font-bold text-foreground tracking-tight whitespace-nowrap">DaddyFX Book</span>}
+        {!collapsed && (
+          <span className="brand-wordmark whitespace-nowrap flex items-center gap-2">
+            Daddy<span className="accent">FX</span>Book
+            <span className="badge-pill bg-primary/15 text-primary">BETA</span>
+          </span>
+        )}
       </div>
 
       <nav className="flex-1 px-3 mt-2 space-y-1">
