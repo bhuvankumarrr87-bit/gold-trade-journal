@@ -6,56 +6,56 @@
 
 @layer base {
   :root {
-    /* Core surfaces — #0F1117 / #111827 / #1A1F2E */
-    --background: 222 24% 7%;          /* #0F1117 */
+    /* Core surfaces — #0D1117 / #161B27 / borders #1E2535 */
+    --background: 215 28% 7%;          /* #0D1117 */
     --foreground: 210 20% 98%;
 
-    --card: 222 22% 11%;               /* #1A1F2E */
+    --card: 222 25% 11%;               /* #161B27 */
     --card-foreground: 210 20% 98%;
 
-    --popover: 222 22% 11%;
+    --popover: 222 25% 11%;
     --popover-foreground: 210 20% 98%;
 
     /* Electric blue #3B82F6 */
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 222 20% 13%;
+    --secondary: 222 22% 13%;
     --secondary-foreground: 210 15% 85%;
 
-    --muted: 222 20% 12%;
+    --muted: 222 22% 12%;
     --muted-foreground: 220 9% 46%;    /* #6B7280 */
 
-    --accent: 222 20% 15%;
+    --accent: 222 22% 15%;
     --accent-foreground: 210 20% 98%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 60%;          /* #EF4444 */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 222 18% 16%;
-    --input: 222 18% 16%;
+    --border: 222 25% 16%;              /* #1E2535 */
+    --input: 222 25% 16%;
     --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
-    /* Profit green #22C55E, loss red */
+    /* Profit green #22C55E, loss red #EF4444, warning amber #F59E0B */
     --profit: 142 71% 45%;
     --loss: 0 84% 60%;
     --warning: 38 92% 50%;
 
-    --card-gradient: linear-gradient(135deg, hsl(222, 22%, 12%) 0%, hsl(222, 22%, 10%) 100%);
-    --card-border: hsl(222, 18%, 18%);
-    --card-glow: 0 0 40px -10px hsl(217, 91%, 60%, 0.12);
-    --glass-bg: hsl(222, 22%, 11%, 0.6);
-    --glass-border: hsl(222, 18%, 22%, 0.5);
+    --card-gradient: linear-gradient(135deg, hsl(222, 25%, 12%) 0%, hsl(222, 25%, 10%) 100%);
+    --card-border: hsl(222, 25%, 16%);
+    --card-glow: 0 0 40px -10px hsl(217, 91%, 60%, 0.10);
+    --glass-bg: hsl(222, 25%, 11%, 0.6);
+    --glass-border: hsl(222, 25%, 20%, 0.5);
 
-    --sidebar-background: 222 26% 6%;
+    --sidebar-background: 215 30% 6%;
     --sidebar-foreground: 220 10% 70%;
     --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 217 91% 60%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 222 20% 11%;
+    --sidebar-border: 222 25% 11%;
     --sidebar-ring: 217 91% 60%;
   }
 }
